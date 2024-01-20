@@ -4,14 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/server.ts",
-    "dev": "docker compose up"
+    "start": "nodemon --legacy-watch src/server.ts",
+    "dev": "docker compose up --build"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-fileupload": "^1.4.3",
+    "nodemon": "^3.0.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
     "uuid": "9.0.1"

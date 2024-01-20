@@ -29,4 +29,6 @@ WORKDIR /app
 
 COPY . .
 
+RUN yarn install
+
 ENTRYPOINT ["tail", "-f", "/dev/null"]

@@ -5,6 +5,6 @@ services:
       - "${PORT}:${PORT}"
     entrypoint: ["yarn", "start"]
     build:
-      context: ./
+      context: .
     volumes:
       - ./:/app/
