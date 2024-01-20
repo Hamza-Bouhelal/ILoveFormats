@@ -1,29 +1,29 @@
-import * as fs from "fs";
-import * as path from "path";
 import { Format } from "../utils/types";
 import { execSync } from "child_process";
 
-export class ConverterService {
-  static bufferToFile = (
-    requestId: string,
-    fileBuffer: Buffer,
-    fileName: string
-  ) => {
-    const dir = path.join(__dirname, "..", "temp", requestId);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-    }
-    const filePath = path.join(dir, fileName);
-    fs.writeFileSync(filePath, fileBuffer);
-    return { dir, filePath };
-  };
+const formatToDefaultFilter: { [key: string]: string } = {
+  [Format.PPTX]: '"Impress MS PowerPoint 2007 XML"',
+  [Format.PDF]: "writer_pdf_Export",
+};
 
-  static convertFile = (
-    dir: string,
-    fileName: string,
-    format: Format
-  ): void => {
-    const command = `soffice --headless --convert-to ${format} ${dir}/${fileName} --outdir ${dir}`;
-    execSync(command);
+export class ConverterService {
+  static convertFile = ({
+    dir,
+    fileName,
+    format,
+    from,
+  }: {
+    dir: string;
+    fileName: string;
+    format: Format;
+    from?: Format;
+  }): void => {
+    const command = `soffice ${
+      from && from === Format.PDF ? '--infilter="impress_pdf_import"' : ""
+    } --headless --convert-to ${format}:${
+      formatToDefaultFilter[format]
+    } ${dir}/${fileName} --outdir ${dir}`;
+    console.log(`Executing command: ${command}`);
+    execSync(command, { stdio: "inherit" });
   };
 }

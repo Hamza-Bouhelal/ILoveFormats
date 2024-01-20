@@ -4,26 +4,38 @@ import cors from "cors";
 import fileUpload from "express-fileupload";
 import { FileConvertionController } from "./controllers/fileConvertion.controller";
 import { fileValidationMiddleware } from "./middlewares/file.validation";
+import { Format, Formats } from "./utils/types";
 
-const endpointName = (from: string, to: string) => `/convert/${from}/to/${to}`;
+const endpointName = ({ from, to }: Formats) => `/convert/${from}/to/${to}`;
 
 export const createApp = () => {
   const app = express();
 
-  const setupEndpoint = (from: string, to: string, callback: any) => {
+  const setupEndpoint = (
+    formats: Formats,
+    callback: (formats: Formats) => any
+  ) => {
     app.post(
-      endpointName(from, to),
+      endpointName(formats),
       authValidationMiddleware,
       fileUpload(),
       fileValidationMiddleware,
-      callback
+      callback(formats)
     );
   };
 
   app.use(express.json());
   app.use(cors());
 
-  setupEndpoint("pdf", "png", FileConvertionController.pdfToPptx);
+  setupEndpoint(
+    { from: Format.PDF, to: Format.PPTX },
+    FileConvertionController.basicConvertion
+  );
+
+  setupEndpoint(
+    { from: Format.PPTX, to: Format.PDF },
+    FileConvertionController.basicConvertion
+  );
 
   return app;
 };

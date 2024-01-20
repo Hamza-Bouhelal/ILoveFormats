@@ -11,12 +11,9 @@ export enum Format {
   PPTX = "pptx",
 }
 
-export interface FileConvertionDto {
-  requestId: string;
-  fileBuffer: Buffer;
-  fileName: string;
-  fileTypeFrom: Format;
-  fileTypeTo: Format;
+export interface Formats {
+  from: Format;
+  to: Format;
 }
 
 export interface FileUploadRequest extends Request {
@@ -25,7 +22,7 @@ export interface FileUploadRequest extends Request {
 
 export interface RequestInfo {
   requestId: string;
-  filePath: string;
+  fileName: string;
 }
 
 export type CustomRequest = FileUploadRequest & RequestInfo;
