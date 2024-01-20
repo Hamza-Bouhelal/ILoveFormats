@@ -1,0 +1,10 @@
+version: "3"
+services:
+  file_converter:
+    ports:
+      - "${PORT}:${PORT}"
+    entrypoint: ["yarn", "start"]
+    build:
+      context: ./
+    volumes:
+      - ./:/app/
