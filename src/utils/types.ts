@@ -6,8 +6,8 @@ export enum Format {
   PNG = "png",
   JPG = "jpg",
   HTML = "html",
-  TXT = "txt:Text",
-  CSV = "csv:Text",
+  TXT = "txt",
+  CSV = "csv",
   PPTX = "pptx",
 }
 

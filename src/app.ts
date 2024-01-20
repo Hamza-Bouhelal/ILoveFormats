@@ -11,31 +11,26 @@ const endpointName = ({ from, to }: Formats) => `/convert/${from}/to/${to}`;
 export const createApp = () => {
   const app = express();
 
-  const setupEndpoint = (
-    formats: Formats,
-    callback: (formats: Formats) => any
-  ) => {
+  const setupEndpoint = (formats: Formats) => {
+    console.log(`Setting up endpoint ${endpointName(formats)}`);
     app.post(
       endpointName(formats),
       authValidationMiddleware,
       fileUpload(),
       fileValidationMiddleware,
-      callback(formats)
+      FileConvertionController.basicConvertion(formats) as any
     );
   };
 
   app.use(express.json());
   app.use(cors());
 
-  setupEndpoint(
-    { from: Format.PDF, to: Format.PPTX },
-    FileConvertionController.basicConvertion
-  );
+  // From PDF
+  setupEndpoint({ from: Format.PDF, to: Format.PPTX });
 
-  setupEndpoint(
-    { from: Format.PPTX, to: Format.PDF },
-    FileConvertionController.basicConvertion
-  );
+  // From PPTX
+  setupEndpoint({ from: Format.PPTX, to: Format.PDF });
+  setupEndpoint({ from: Format.PPTX, to: Format.HTML });
 
   return app;
 };

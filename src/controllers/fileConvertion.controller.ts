@@ -39,8 +39,8 @@ export class FileConvertionController {
       try {
         ConverterService.convertFile({
           ...FileConvertionController.pathBuilder(req),
-          format: to,
           from,
+          to,
         });
         const bufferOutput = FileConvertionController.getOutputFile(
           requestId,
@@ -61,7 +61,7 @@ export class FileConvertionController {
         );
         res.status(500).json({ message: "Error while converting file." });
       }
-      safeDeleteDir(`/files/${requestId}`);
+      safeDeleteDir(`./files/${requestId}`);
     };
   }
 }
