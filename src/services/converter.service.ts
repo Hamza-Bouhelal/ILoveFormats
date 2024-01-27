@@ -1,12 +1,13 @@
-import { Format } from "../utils/types";
+import { conversionsConfig } from "../conversionConfig";
+import { ConversionArgs, ConvertFileParams, Format } from "../utils/types";
 import { execSync } from "child_process";
 
-const formatToDefaultFilter: { [key: string]: string } = {
-  [Format.PPTX]: '"Impress MS PowerPoint 2007 XML"',
-  [Format.PDF]: "writer_pdf_Export",
-  [Format.CSV]: "Text",
-  [Format.TXT]: "Text",
-  [Format.HTML]: "impress_html_Export:EmbedImages",
+const getConversionArgs = (from: Format, to: Format): ConversionArgs => {
+  const { filter, infilter } = (conversionsConfig[from] as any)[to];
+  return {
+    filter: filter ? `:${filter}` : "",
+    infilter,
+  };
 };
 
 export class ConverterService {
@@ -15,18 +16,10 @@ export class ConverterService {
     fileName,
     from,
     to,
-  }: {
-    dir: string;
-    fileName: string;
-    to: Format;
-    from: Format;
-  }): void => {
-    const command = `soffice ${
-      from && from === Format.PDF ? '--infilter="impress_pdf_import"' : ""
-    } --headless --convert-to ${to}:${
-      formatToDefaultFilter[to]
-    } ${dir}/${fileName} --outdir ${dir}`;
-    console.log(`Executing command: ${command}`);
+  }: ConvertFileParams): void => {
+    const { filter, infilter } = getConversionArgs(from, to);
+    const infilterArg = infilter ? `--infilter="${infilter}"` : "";
+    const command = `soffice ${infilterArg} --headless --convert-to ${to}${filter} "${dir}/${fileName}" --outdir ${dir}`;
     execSync(command, { stdio: "inherit" });
   };
 }

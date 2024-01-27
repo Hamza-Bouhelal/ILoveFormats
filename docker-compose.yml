@@ -3,7 +3,7 @@ services:
   file_converter:
     ports:
       - "${PORT}:${PORT}"
-    entrypoint: ["yarn", "start"]
+    entrypoint: ["yarn", "dev"]
     build:
       context: .
     volumes:

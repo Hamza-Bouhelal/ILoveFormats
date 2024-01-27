@@ -5,6 +5,7 @@ import fileUpload from "express-fileupload";
 import { FileConvertionController } from "./controllers/fileConvertion.controller";
 import { fileValidationMiddleware } from "./middlewares/file.validation";
 import { Format, Formats } from "./utils/types";
+import { conversionsConfig } from "./conversionConfig";
 
 const endpointName = ({ from, to }: Formats) => `/convert/${from}/to/${to}`;
 
@@ -25,12 +26,11 @@ export const createApp = () => {
   app.use(express.json());
   app.use(cors());
 
-  // From PDF
-  setupEndpoint({ from: Format.PDF, to: Format.PPTX });
-
-  // From PPTX
-  setupEndpoint({ from: Format.PPTX, to: Format.PDF });
-  setupEndpoint({ from: Format.PPTX, to: Format.HTML });
+  Object.keys(conversionsConfig).forEach((from) => {
+    Object.keys(conversionsConfig[from as Format] as object).forEach((to) => {
+      setupEndpoint({ from: from as Format, to: to as Format });
+    });
+  });
 
   return app;
 };

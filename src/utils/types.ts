@@ -11,6 +11,22 @@ export enum Format {
   PPTX = "pptx",
 }
 
+export interface ConversionArgs {
+  filter?: string;
+  infilter?: string;
+}
+
+type conversionInnerConfig = Partial<Record<Format, ConversionArgs>>;
+
+export type ConversionConfig = Partial<Record<Format, conversionInnerConfig>>;
+
+export interface ConvertFileParams {
+  dir: string;
+  fileName: string;
+  to: Format;
+  from: Format;
+}
+
 export interface Formats {
   from: Format;
   to: Format;
