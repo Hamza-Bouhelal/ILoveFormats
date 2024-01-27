@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "setup": "echo $(mkdir files)",
-    "start": "yarn setup && nodemon --legacy-watch src/server.ts",
-    "dev": "docker compose up"
+    "start": "yarn setup && ts-node src/server.ts",
+    "dev": "docker compose up && yarn setup && nodemon --legacy-watch src/server.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

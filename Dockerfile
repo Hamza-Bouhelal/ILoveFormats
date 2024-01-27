@@ -31,4 +31,6 @@ COPY . .
 
 RUN yarn install
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+EXPOSE 8080
+
+ENTRYPOINT ["yarn", "start"]

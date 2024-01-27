@@ -6,7 +6,7 @@ const formatToDefaultFilter: { [key: string]: string } = {
   [Format.PDF]: "writer_pdf_Export",
   [Format.CSV]: "Text",
   [Format.TXT]: "Text",
-  [Format.HTML]: "impress_html_Export:EmbedImages ",
+  [Format.HTML]: "impress_html_Export:EmbedImages",
 };
 
 export class ConverterService {
