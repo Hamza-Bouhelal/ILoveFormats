@@ -9,6 +9,8 @@ export enum Format {
   TXT = "txt",
   CSV = "csv",
   PPTX = "pptx",
+  DOCX = "docx",
+  XLSX = "xlsx",
 }
 
 export interface ConversionArgs {

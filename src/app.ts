@@ -26,8 +26,8 @@ export const createApp = () => {
   app.use(express.json());
   app.use(cors());
 
-  Object.keys(conversionsConfig).forEach((from) => {
-    Object.keys(conversionsConfig[from as Format] as object).forEach((to) => {
+  Object.entries(conversionsConfig).forEach(([from, possibleConversions]) => {
+    Object.keys(possibleConversions).forEach((to) => {
       setupEndpoint({ from: from as Format, to: to as Format });
     });
   });

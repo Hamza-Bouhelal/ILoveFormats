@@ -6,8 +6,9 @@
   "scripts": {
     "setup": "echo $(mkdir files)",
     "start": "yarn setup && ts-node src/server.ts",
-    "docker:run": "docker compose up",
-    "dev": "yarn setup && nodemon --legacy-watch src/server.ts"
+    "docker:run": "yarn reset && docker compose up",
+    "dev": "yarn setup && nodemon --legacy-watch src/server.ts",
+    "reset": "echo $(docker stop $(docker ps -aq))"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -35,6 +35,7 @@ export const fileValidationMiddleware = (
     fs.mkdirSync(dir);
     file.mv(`${dir}/${file.name}`, (err) => {
       if (err) {
+        console.error(`Error while processing file: ${err}`);
         return res
           .status(500)
           .json({ message: "Error while processing file." });

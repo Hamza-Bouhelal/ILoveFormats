@@ -24,4 +24,9 @@ export const conversionsConfig: ConversionConfig = {
       filter: "draw_png_Export",
     },
   },
+  [Format.PNG]: {
+    [Format.PDF]: {
+      filter: "writer_pdf_Export",
+    },
+  },
 };
