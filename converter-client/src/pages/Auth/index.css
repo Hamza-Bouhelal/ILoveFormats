@@ -1,0 +1,7 @@
+.light-input input:-webkit-autofill {
+  box-shadow: 0 0 0 30px white inset;
+}
+
+.dark-input input:-webkit-autofill {
+  box-shadow: 0 0 0 30px #18181b inset;
+}

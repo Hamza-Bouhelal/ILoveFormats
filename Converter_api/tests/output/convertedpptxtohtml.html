@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <title>Data Driven reachability analysis toolbox using Python</title>
+  <meta name="generator" content="LibreOffice 7.4.7.2 (Linux)"/>
+  <meta name="author" content="Hamza"/>
+  <meta name="created" content="00:00:00"/>
+  <meta name="changedby" content="hamzabouhelal bouhelal"/>
+  <meta name="changed" content="2022-05-11T00:32:49"/>
+  <meta name="AppVersion" content="16.0000"/>
+  <meta name="Notes" content="27"/>
+  <meta name="PresentationFormat" content="On-screen Show (16:9)"/>
+  <meta name="Slides" content="27"/>
+</head>
+<body>
+<h1><b>Data Driven reachability analysis toolbox using Python</b></h1>
+<h2>Hamza Bouhelal</h2>
+<h1 style="page-break-before:always; "><b>Contents</b></h1>
+<ul>
+<li>Introduction</li>
+<li>Motivation</li>
+<li>Set Representation</li>
+<ul>
+<li>Zonotope</li>
+<li>Matrix Zonotope</li>
+</ul>
+<li>Problem statement </li>
+<li>Notation</li>
+<li>Approach / Application</li>
+<ul>
+<li>LTI systems</li>
+<li>Lipschitz nonlinear systems</li>
+<li>Polynomial systems</li>
+</ul>
+<li>Conclusion</li>
+<li>References</li>
+</ul>
+<h1 style="page-break-before:always; "><b>Introduction</b></h1>
+<h2>Reachability analysis is a formal verification technique for determining whether a system can or cannot reach a certain state. It is often used to verify the safety of systems, such as checking that a system will never reach an unsafe state.</h2>
+<h1 style="page-break-before:always; "><b>Introduction</b></h1>
+<ul>
+<li>Robotics</li>
+<li>Astrophysics</li>
+<li>Nanotechnology</li>
+<li>And so on &</li>
+</ul>
+<p>There are many examples of where reachability analysis could be applied. </p>
+<h1 style="page-break-before:always; "><b>Motivation</b></h1>
+<h2>How to Compute the reachable sets from simulated trajectories with noise having no prior information about the system dynamics?</h2>
+<h1 style="page-break-before:always; "><b>Set Representation</b></h1>
+<h2>Zonotope<a href="#action?jump=lastslide"><u>[1]</u></a> are used to represent sets in this toolbox</h2>
+<h2>Given a center c»   and a generator matrix G=[g}¹~Ž, &, g}³»~ ] with g}O~ a generator vector, we define a zonotope by <b>Z = &lt;c, G&gt;</b> and further define:<b> </b></h2>
+<h2><b></b></h2>
+<h1 style="page-break-before:always; "><b>Set Representation</b></h1>
+<ul>
+<li>Linear map: 		</li>
+<p><b></b></p>
+<li>Minkowski sum:	</li>
+<li>Cartesian product:	</li>
+</ul>
+<p><b>Zonotope Properties:</b></p>
+<h1 style="page-break-before:always; "><b>Set Representation</b></h1>
+<h2><b>Matrix Zonotope:</b></h2>
+<h2>Given a center matrix C9   and  =[G}¹~Ž, &, G}³»~ ] with G}O~ a generator matrix , we define a matrix Zonotope as:</h2>
+<h1 style="page-break-before:always; "><b>Problem statement</b></h1>
+<p>Recall <a href="#action?jump=lastslide"><u>[2]</u></a> a discrete-time system is defined by:</p>
+<p><b></b></p>
+<p><b></b></p>
+<p>The <b>Exact Reachable Set <a href="#action?jump=lastslide"><u>[3]</b></u></a> R™ of the system for N time steps is:</p>
+<p><b></b></p>
+<p>How to compute an over-approximation of the exact reachable set R™ ?</p>
+<ul>
+<li>Linear time invariant systems: 		</li>
+<li>Lipschitz nonlinear systems: 		</li>
+<li>Polynomial systems: 			</li>
+</ul>
+<h1 style="page-break-before:always; "><b>Notation</b></h1>
+<h2>Let K input-state trajectories of length T simulated from a system. we denote              D = {U‹, X} the collection of all the data  from the simulated  trajectories with bounded noise W‹.</h2>
+<h2>Finally, we define all matrices [A B] that are consistent with the data D by:</h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>For this analysis, we consider the Ideas from  <a href="#action?jump=lastslide"><u>[4] Verifying dissipativity properties from noise-corrupted input-state data</u></a>  that were applied in<a href="#action?jump=lastslide"><u> [3] Data-Driven Reachability Analysis Using Matrix Zonotopes</u></a> and <a href="#action?jump=lastslide"><u>[5] Data-Driven Reachability Analysis from Noisy Data </u></a>to perform the reachability analysis.</h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Linear time-Invariant system:</b></h2>
+<h2>Given that the true system is within the set of models  N£, we have <b>[A B]  N£</b>.</h2>
+<h2>We have by definition that:  <b>N£  </b>† <b>M£.</b></h2>
+<h2><b>Solve M£ = ?</b></h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Linear time-Invariant system: </b></h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Linear time-Invariant system: </b></h2>
+<h2><b></b></h2>
+<h2>We consider the data driven reachability of the discrete version (sampling time 0.05sec) of the system from<a href="http://www.dii.unimo.it/~zanasi/didattica/Teoria_dei_Sistemi/Luc_TDS_ING_2016_Reachability_and_Controllability.pdf"><u> [6] Zanasi Roberto System Theory</u></a>:</h2>
+<h2><b></b></h2>
+<h2><b></b></h2>
+<h2>After discretization of the system, we get:	 </h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Linear time-Invariant system:  </b></h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Linear time-Invariant system:</b></h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Lipschitz nonlinear systems: 	 </b></h2>
+<h2><b></b></h2>
+<h2>Taylor series expansion at the linearization point                       , </h2>
+<h2>The result of the expansion is an infinite Taylor series that can be over-approximated by a first-order Taylor series and a remained L(z):</h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Lipschitz nonlinear systems: 	 </b></h2>
+<ul>
+<li><b>Obtain an approximate linearized model from the noisy data.</b></li>
+<li><b>Obtain a zonotope that over-approximates the modeling mismatch together with the Lagrange remainder L(z) for the chosen system</b>	</li>
+<h2>We assume f Lipschitz continuous ( [<a href="#action?jump=lastslide"><u>7</u></a>] and [<a href="#action?jump=lastslide"><u>8</u></a>] ), We can use the approximation: </h2>
+</ul>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Lipschitz nonlinear systems: 	</b></h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Lipschitz nonlinear systems: 	 </b></h2>
+<h2><b></b></h2>
+<h2><b>We consider the discrete-time version of the stirred-tank reactor system in [<a href="#action?jump=lastslide"><u>9</u></a>].</b></h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Lipschitz nonlinear systems: 	 </b></h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Polynomial systems: 	</b></h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Polynomial systems:</b></h2>
+<ul>
+<li><b>Construct</b></li>
+<h2><b></b></h2>
+<li><b>Compute matrix Zonotope M£ that contains all matrices C that are consistent with the data:		</b></li>
+<h2><b></b></h2>
+<li><b>Propagate ahead using M£</b></li>
+<h2><b></b></h2>
+<h2><b></b></h2>
+<h2><b></b></h2>
+<h2><b></b></h2>
+<h2><b></b></h2>
+</ul>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Polynomial systems: 	</b></h2>
+<h1 style="page-break-before:always; "><b>Approach / Application</b></h1>
+<h2>	<b>Polynomial systems: 	</b></h2>
+<h2><b></b></h2>
+<h2><b>NOTE:</b></h2>
+<h2><b>The data driven reachability analysis of polynomial systems isnt functional yet.</b></h2>
+<h1 style="page-break-before:always; "><b>Conclusion</b></h1>
+<h2>In this study, I implemented algorithms to over-estimate a system's reachable set by over-estimating the reachable set of all systems consistent with the data and noise. </h2>
+<h2>The data-driven reachability results, as displayed in the application, appropriately over-estimate the exact reachable sets. Thus, theoretical guarantees are provided. </h2>
+<h2>However, the method used produces conservative results. </h2>
+<h1 style="page-break-before:always; "><b>References</b></h1>
+<h2>[1] Matthias Althoff and Bruce H. Krogh &quot;<a href="https://mediatum.ub.tum.de/doc/1287219/172487.pdf"><u>Zonotope Bundles for the Efficient Computation of Reachable Sets</u></a>&quot;</h2>
+<h2>[2]  <a href="http://assets.press.princeton.edu/chapters/s9012.pdf"><u>State-Space Linear Systems</u></a></h2>
+<h2>[3] Amr Alanwar , Anne Koch, Frank Allgöwer, and Karl Henrik Johansson <a href="https://arxiv.org/pdf/2011.08472.pdf"><u>Data-Driven Reachability Analysis Using Matrix Zonotopes</u></a></h2>
+<h2>[4] Anne Koch, Julian Berberich, and Frank Allgöwer <a href="https://arxiv.org/pdf/2004.07270.pdf"><u>Verifying dissipativity properties from noise-corrupted input-state data</u></a></h2>
+<h2>[5] Amr Alanwar , Anne Koch, Frank Allgöwer, and Karl Henrik Johansson <a href="https://arxiv.org/pdf/2105.07229.pdf"><u>Data-Driven Reachability Analysis from Noisy Data</u></a></h2>
+<h2>[6] Zanasi Roberto <a href="http://www.dii.unimo.it/~zanasi/didattica/Teoria_dei_Sistemi/Luc_TDS_ING_2016_Reachability_and_Controllability.pdf"><u>System Theory</u></a></h2>
+<h2>[7] Jan M Montenbruck and Frank Allgower <a href="https://ieeexplore.ieee.org/document/7799273"><u> Some problems arising in controller design from big data ¨ via input-output methods.</u></a></h2>
+<h2>[8] Carlo Novara, Lorenzo Fagiano, and Mario Milanese <a href="https://www.sciencedirect.com/science/article/abs/pii/S0005109813000034"><u> Direct feedback control design for nonlinear systems</u></a></h2>
+<h2>[9] Jose Manuel Bravo, Teodoro Alamo, and Eduardo F Camacho <a href="https://www.academia.edu/25743242/Robust_MPC_of_constrained_discrete-time_nonlinear_systems_based_on_approximated_reachable_sets"><u>Robust MPC of constrained discrete- ´ time nonlinear systems based on approximated reachable sets</u></a></h2>
+</body>
+</html>
