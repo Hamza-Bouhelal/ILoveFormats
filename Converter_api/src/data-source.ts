@@ -24,6 +24,6 @@ export const AppDataSource = new DataSource({
   logging: false,
   entities: [Users, RefreshToken, Subscription, ApiKey],
   migrationsTableName: "migrations",
-  migrations: ["src/migrations/*.ts"],
+  migrations: ["./migrations/*"],
   subscribers: [],
 });

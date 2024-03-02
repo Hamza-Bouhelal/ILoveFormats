@@ -28,14 +28,12 @@ RUN npm install -g yarn
 
 WORKDIR /app
 
-COPY package.json .
-COPY yarn.lock .
-COPY dist ./dist
+COPY . .
 
-RUN yarn install --production
+RUN rm -rf ./app/node_modules
+
+RUN yarn install
 
 EXPOSE 8080
 
-RUN mkdir files
-
-ENTRYPOINT ["yarn", "start"]
+ENTRYPOINT ["yarn", "dev"]
