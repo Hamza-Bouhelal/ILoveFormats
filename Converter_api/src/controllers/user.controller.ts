@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
-import { Users } from "../entity/User";
-import { RefreshToken } from "../entity/RefreshToken";
-import { sign, verify } from "jsonwebtoken";
-import { getConfig } from "../utils/config";
-import { hash, compare } from "bcrypt";
-import { AuthCustomRequest, UserPayload } from "../middlewares/auth.middleware";
-import { Subscription } from "../entity/Subscription";
-import { SubscriptionLevel } from "../utils/types";
-import { subscriptionModel } from "../app.data";
-import { AppDataSource } from "../data-source";
-import { Repositories } from "../utils/repositories.factory";
+import { Request, Response } from 'express';
+import { Users } from '../entity/User';
+import { RefreshToken } from '../entity/RefreshToken';
+import { sign, verify } from 'jsonwebtoken';
+import { getConfig } from '../utils/config';
+import { hash, compare } from 'bcryptjs';
+import { AuthCustomRequest, UserPayload } from '../middlewares/auth.middleware';
+import { Subscription } from '../entity/Subscription';
+import { SubscriptionLevel } from '../utils/types';
+import { subscriptionModel } from '../app.data';
+import { AppDataSource } from '../data-source';
+import { Repositories } from '../utils/repositories.factory';
 
 const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = getConfig();
 
@@ -17,7 +17,7 @@ const { userRepository, refreshTokenRepository } =
   Repositories.getRepositories();
 
 function generateAccessToken(user: UserPayload) {
-  return sign(user, ACCESS_TOKEN_SECRET, { expiresIn: "1h" });
+  return sign(user, ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
 }
 
 function generateRefreshToken(user: UserPayload) {
@@ -36,7 +36,7 @@ export async function register(req: Request, res: Response) {
   const { email, password } = req.body;
   const users = await userRepository.find({ where: { email } });
   if (users.length) {
-    return res.status(409).json({ error: "User already exists" });
+    return res.status(409).json({ error: 'User already exists' });
   }
   const hashedPassword = await hash(password, 10);
 
@@ -62,12 +62,12 @@ export async function login(req: Request, res: Response) {
   const { email, password } = req.body;
   const users = await userRepository.find({ where: { email } });
   if (!users.length) {
-    return res.status(404).json({ error: "User not found" });
+    return res.status(404).json({ error: 'User not found' });
   }
   const user = users[0];
   const isPasswordValid = await compare(password, user.password);
   if (!isPasswordValid) {
-    return res.status(401).json({ error: "Invalid password" });
+    return res.status(401).json({ error: 'Invalid password' });
   }
   return res.status(200).json({ ...(await auth({ email })) });
 }
@@ -79,7 +79,7 @@ export async function logout(req: Request, res: Response) {
     try {
       const decodedToken = verify(refreshToken.token, REFRESH_TOKEN_SECRET);
       if (
-        !(typeof decodedToken == "string") &&
+        !(typeof decodedToken == 'string') &&
         decodedToken.email === user.email
       ) {
         await refreshTokenRepository.delete({
@@ -90,13 +90,13 @@ export async function logout(req: Request, res: Response) {
       // Do nothing
     }
   });
-  res.status(200).send({ error: "User logged out successfully" });
+  res.status(200).send({ error: 'User logged out successfully' });
 }
 
 export async function refreshToken(req: Request, res: Response) {
   const { refreshToken } = req.body;
   if (!refreshToken) {
-    return res.status(401).json({ error: "Refresh token missing" });
+    return res.status(401).json({ error: 'Refresh token missing' });
   }
 
   const token = await refreshTokenRepository.findOne({
@@ -104,24 +104,40 @@ export async function refreshToken(req: Request, res: Response) {
   });
 
   if (!token) {
-    return res.status(401).json({ error: "Invalid refresh token" });
+    return res.status(401).json({ error: 'Invalid refresh token' });
   }
 
   try {
     const decodedToken = verify(refreshToken, REFRESH_TOKEN_SECRET);
-    if (typeof decodedToken == "string") {
-      return res.status(401).json({ error: "Invalid refresh token" });
+    if (typeof decodedToken == 'string') {
+      return res.status(401).json({ error: 'Invalid refresh token' });
     }
     const { email } = decodedToken;
 
     const user = await userRepository.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: 'User not found' });
     }
 
     return res.status(200).json({ ...(await auth({ email }, refreshToken)) });
   } catch (err) {
-    return res.status(401).json({ error: "Invalid refresh token" });
+    return res.status(401).json({ error: 'Invalid refresh token' });
   }
+}
+
+export async function updatePassword(req: Request, res: Response) {
+  const { user } = req as AuthCustomRequest;
+  const { oldPassword, newPassword } = req.body;
+  const isPasswordValid = await compare(oldPassword, user.password);
+  if (!isPasswordValid) {
+    return res.status(401).json({ error: 'Invalid password' });
+  }
+  const hashedPassword = await hash(newPassword, 10);
+  await userRepository.update(user, {
+    password: hashedPassword,
+  });
+  res.status(200).send({
+    message: 'Password Updated successfully',
+  });
 }

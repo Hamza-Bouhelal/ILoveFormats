@@ -1,17 +1,18 @@
-import { Request } from "express";
-import { FileArray } from "express-fileupload";
+import { Request } from 'express';
+import { FileArray } from 'express-fileupload';
+import { AuthCustomRequest } from '../middlewares/auth.middleware';
 
 export enum Format {
-  PDF = "pdf",
-  PNG = "png",
-  JPG = "jpg",
-  HTML = "html",
-  TXT = "txt",
-  CSV = "csv",
-  PPTX = "pptx",
-  DOCX = "docx",
-  XLSX = "xlsx",
-  SVG = "svg",
+  PDF = 'pdf',
+  PNG = 'png',
+  JPG = 'jpg',
+  HTML = 'html',
+  TXT = 'txt',
+  CSV = 'csv',
+  PPTX = 'pptx',
+  DOCX = 'docx',
+  XLSX = 'xlsx',
+  SVG = 'svg',
 }
 
 export interface ConversionArgs {
@@ -45,11 +46,11 @@ export interface RequestInfo {
   fileName: string;
 }
 
-export type CustomRequest = FileUploadRequest & RequestInfo;
+export type CustomRequest = FileUploadRequest & RequestInfo & AuthCustomRequest;
 
 export enum SubscriptionLevel {
-  Free = "free",
-  BASIC = "basic",
-  PREMIUM = "premium",
-  INFINITE = "infinite",
+  Free = 'free',
+  BASIC = 'basic',
+  PREMIUM = 'premium',
+  INFINITE = 'infinite',
 }

@@ -13,7 +13,7 @@ RUN apt-get update && \
 RUN echo "deb http://deb.debian.org/debian bullseye-backports main" >> /etc/apt/sources.list.d/libreoffice.list
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends --fix-missing -t bullseye-backports libreoffice && \
+    apt-get install -y --no-install-recommends --fix-missing -t bullseye-backports libreoffice  --fix-missing && \
     rm -rf /var/lib/apt/lists/*
 
 ENV NODE_VERSION=18.12.0
@@ -25,9 +25,12 @@ RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN npm install -g yarn
 
+
 WORKDIR /app
 
 COPY . .
+
+RUN rm -rf ./app/node_modules
 
 RUN yarn install
 

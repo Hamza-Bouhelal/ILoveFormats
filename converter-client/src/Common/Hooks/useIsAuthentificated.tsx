@@ -1,6 +1,5 @@
-import { useEffect } from "react";
-import useAuth from "./useAuth";
-import { useAuthContext } from "../Providers/AuthContext";
+import { useEffect } from 'react';
+import { useAuthContext } from '../Providers/AuthContext';
 
 export const useAuthentificatedPage = () => {
   const { isLoading, isAuthentification, clearAuthInfo, ...rest } =
@@ -9,7 +8,7 @@ export const useAuthentificatedPage = () => {
   useEffect(() => {
     if (!isLoading && !isAuthentification) {
       clearAuthInfo();
-      window.location.href = "/";
+      window.location.href = '/';
     }
   }, [isLoading, isAuthentification]);
 

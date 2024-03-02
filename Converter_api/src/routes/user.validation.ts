@@ -1,4 +1,4 @@
-import * as Joi from "joi";
+import * as Joi from 'joi';
 
 export const authSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -7,4 +7,9 @@ export const authSchema = Joi.object({
 
 export const refreshTokenSchema = Joi.object({
   refreshToken: Joi.string().required(),
+});
+
+export const updatePasswordSchema = Joi.object({
+  oldPassword: Joi.string().required(),
+  newPassword: Joi.string().required(),
 });

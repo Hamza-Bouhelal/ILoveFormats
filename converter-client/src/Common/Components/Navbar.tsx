@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Navbar,
   NavbarBrand,
@@ -10,19 +10,19 @@ import {
   Dropdown,
   DropdownMenu,
   Avatar,
-} from "@nextui-org/react";
-import ThemeSwitcher from "./ThemeSwitcher";
-import Login from "../../pages/Auth/Login";
-import SignUp from "../../pages/Auth/SignUp";
-import { useAuthContext } from "../Providers/AuthContext";
-import { BrandTitle } from "./BrandTitle";
-import { logout } from "../../pages/Auth/api/authApi";
+} from '@nextui-org/react';
+import ThemeSwitcher from './ThemeSwitcher';
+import Login from '../../pages/Auth/Login';
+import SignUp from '../../pages/Auth/SignUp';
+import { useAuthContext } from '../Providers/AuthContext';
+import { BrandTitle } from './BrandTitle';
+import { logout } from '../../pages/Auth/api/authApi';
 
 export default function Nav() {
   const { user, clearAuthInfo, accessToken } = useAuthContext();
 
   const handleLogout = () => {
-    logout(accessToken || "").finally(() => {
+    logout(accessToken || '').finally(() => {
       clearAuthInfo();
     });
   };
@@ -32,7 +32,7 @@ export default function Nav() {
       <NavbarBrand className="">
         <Link
           color="foreground"
-          href={user ? "/dashboard" : "/"}
+          href={user ? '/dashboard' : '/'}
           className="font-bold text-inherit hover:text-primary"
         >
           <BrandTitle />
@@ -79,7 +79,9 @@ export default function Nav() {
               <DropdownItem key="api-key" href="/api-key">
                 Api Keys
               </DropdownItem>
-              <DropdownItem key="settings">My Settings</DropdownItem>
+              <DropdownItem key="settings" href="/account-details">
+                Account Details
+              </DropdownItem>
               <DropdownItem key="analytics">Analytics</DropdownItem>
               <DropdownItem key="system">System</DropdownItem>
               <DropdownItem key="configurations">Configurations</DropdownItem>

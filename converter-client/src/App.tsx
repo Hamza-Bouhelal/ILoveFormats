@@ -1,10 +1,11 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import { Conversion } from "./pages/Convertion/Convertion";
-import { Error } from "./Common/Components/Error";
-import Home from "./pages/Home/Home";
-import { ApiKey } from "./pages/ApiKey/ApiKey";
-import { Docs } from "./pages/ApiDocs/Docs";
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import Dashboard from './pages/Dashboard/Dashboard';
+import { Conversion } from './pages/Convertion/Convertion';
+import { Error } from './Common/Components/Error';
+import Home from './pages/Home/Home';
+import { ApiKey } from './pages/ApiKey/ApiKey';
+import { Docs } from './pages/ApiDocs/Docs';
+import { UserInfo } from './pages/UserInfo/UserInfo';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/convert" element={<Conversion />} />
           <Route path="/api-key" element={<ApiKey />} />
           <Route path="/docs" element={<Docs />} />
+          <Route path="/account-details" element={<UserInfo />} />
           <Route
             path="*"
             element={

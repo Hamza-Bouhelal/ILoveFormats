@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
-import { getUser, refreshToken } from "../../pages/Auth/api/authApi";
+import { useState, useEffect, useCallback } from 'react';
+import { getUser, refreshToken } from '../../pages/Auth/api/authApi';
 
-const USER_STORAGE_KEY = "user";
-const ACCESS_TOKEN_STORAGE_KEY = "accessToken";
-const REFRESH_TOKEN_STORAGE_KEY = "refreshToken";
+const USER_STORAGE_KEY = 'user';
+const ACCESS_TOKEN_STORAGE_KEY = 'accessToken';
+const REFRESH_TOKEN_STORAGE_KEY = 'refreshToken';
 
 type User = {
   email: string;
@@ -15,7 +15,7 @@ type AuthInfo = {
   refreshToken: string;
 };
 
-const useAuth = () => {
+const useAuth = (accessToken?: string) => {
   const [authInfo, setAuthInfo] = useState<AuthInfo | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAuthentification, setIsAuthentificated] = useState<boolean>(false);
@@ -36,7 +36,8 @@ const useAuth = () => {
     const getAuthInfoFromLocalStorage = async () => {
       if (authInfo || !isLoading || isAuthentification) return;
       const storedUser = localStorage.getItem(USER_STORAGE_KEY);
-      const storedAccessToken = localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
+      const storedAccessToken =
+        accessToken || localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
       const storedRefreshToken = localStorage.getItem(
         REFRESH_TOKEN_STORAGE_KEY
       );
@@ -77,7 +78,7 @@ const useAuth = () => {
     getAuthInfoFromLocalStorage();
   }, []);
 
-  const clearAuthInfoFromLocalStorage = (path = "/") => {
+  const clearAuthInfoFromLocalStorage = (path = '/') => {
     setAuthInfo(null);
     localStorage.removeItem(USER_STORAGE_KEY);
     localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
